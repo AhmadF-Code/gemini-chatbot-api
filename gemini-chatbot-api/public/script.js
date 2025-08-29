@@ -62,9 +62,10 @@ form.addEventListener('submit', async function (e) {
     const data = await response.json();
 
     if (data && data.result) {
-      thinkingMsg.textContent = data.result;
+      // Parse the Markdown response to HTML using the 'marked' library
+      thinkingMsg.innerHTML = marked.parse(data.result);
       // Add AI response to history. The Gemini API uses 'model' for its role.
-      chatHistory.push({ role: 'model', content: data.result });
+      chatHistory.push({ role: "model", content: data.result });
     } else {
       thinkingMsg.textContent = 'Sorry, no response received.';
       // If the bot failed, remove the last user message from history
